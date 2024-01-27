@@ -5,8 +5,7 @@ import models
 from models.base_model import BaseModel
 from models.user import User
 from models.book import Book
-import ast
-import json
+
 
 
 class BookSwapCommand(cmd.Cmd):
