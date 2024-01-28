@@ -13,9 +13,17 @@ class FileStorage:
     __objects = {}
 
 
-    def all(self):
+    def all(self, cls=None):
         """Returns the dictionary __objects"""
-        return FileStorage.__objects
+        
+        if cls is not None:
+            new_dict = {}
+            for key, value in self.__objects.items():
+                if cls == value.__class__ or cls == value.__class__.__name__:
+                    new_dict[key] = value
+            return new_dict
+        
+        return self.__objects
     
     def new(self, obj):
         """Sets in __objects the obj with key <obj class name>.id"""
@@ -36,3 +44,11 @@ class FileStorage:
                 new_dict = json.load(f)
             for key, value in new_dict.items():
                 FileStorage.__objects[key] = eval(value['__class__'])(**value)
+                
+    def delete(self, obj=None):
+        """To delete an object from __object"""
+        
+        if obj is not None:
+            key = obj.__class__.__name__ + '.' + obj.id
+            if key in self.__objects:
+                del self.__objects[key]
