@@ -12,7 +12,7 @@ import shlex
 class BookSwapCommand(cmd.Cmd):
     """"This is the console for BookSwap"""
     prompt = '(BookSwap) '
-    classes = {'BaseModel', 'User', 'Book'}
+    classes = {'BaseModel': BaseModel, 'User': User, 'Book': Book}
 
     def do_quit(self, arg):
         """Quit command to exit the program"""

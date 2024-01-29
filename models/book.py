@@ -1,15 +1,19 @@
 #!/usr/bin/python3
 """This is the Book class"""
-from models.base_model import BaseModel
-from models.user import User
+from models.base_model import BaseModel, Base
+import sqlalchemy
+from sqlalchemy import Column, String, Text, ForeignKey
+from sqlalchemy.orm import relationship
 
 
-class Book(BaseModel):
+class Book(BaseModel, Base):
     """This is the Book class"""
-    title = ""
-    author = ""
-    synopsis = ""
-    owner_id = ""
-    borrower_id = ""
-    status = ""
-    image = ""
+    
+    __tablename__ = 'books'
+    title = Column(String(128), nullable=False)
+    author = Column(String(128), nullable=False)
+    synopsis = Column(String(128), nullable=False)
+    user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
+    status = Column(String(128), nullable=False)
+    image = Column(Text, nullable=False)
+    user = relationship('User', back_populates='books')
