@@ -3,12 +3,25 @@
 import uuid
 from datetime import datetime
 import models
+import sqlalchemy
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, String, DateTime
 
+
+if models.storage_t == 'db':
+    Base = declarative_base()
+else:
+    Base = object
 
 class BaseModel:
     """This class will define all common attributes/methods
     for other classes
     """
+    
+    if models.storage_t == 'db':
+        id = Column(String(60), primary_key=True)
+        created_at = Column(DateTime, default=datetime.utcnow())
+        updated_at = Column(DateTime, default=datetime.utcnow())
 
     def __init__(self, *args, **kwargs):
         """Instantiates a new model"""
@@ -52,4 +65,12 @@ class BaseModel:
         new_dict['__class__'] = self.__class__.__name__
         new_dict['created_at'] = self.created_at.isoformat()
         new_dict['updated_at'] = self.updated_at.isoformat()
+        
+        if '_sa_instance_state' in new_dict:
+            del new_dict['_sa_instance_state']
+    
         return new_dict
+    
+    def delete(self):
+        """Delete current instance from storage"""
+        models.storage.delete(self)
