@@ -1,36 +1,77 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>BookSwap</title>
-        <link rel="stylesheet" type="text/css" href="css/style.css">
-        <link rel="shortcut icon" href="static/images/logo.jpg">
-    </head>
-    <body>
-        <div class="container">
-            <section class="navigation">
-                <img class="logo" src="static/images/logo.jpg" alt="LOGO">
-                <a href="index.html"><strong>Home</strong></a>
-                <a href="book.html"><strong>Books</strong></a>
-                <a href="about.html"><strong>About</strong></a>
-                <input class="text-field" type="text" placeholder="Search by title, author, genre">
-                <button class="filter">
-                    <img class="icon" id="search" src="static/images/searchIcon.png" alt="Search">
-                </button>
-                <a href="login.html"><strong>Login</strong></a>
-            </section>
-
-            <section>
-                <div class="login-container">
-                    <h2>Welcome</h2>
-                    <p>Please choose an option below:</p>
-                    <button onclick="location.href='signin.html'">Sign In</button>
-                    <button onclick="location.href='signup.html'">Sign Up</button>
-                </div>
-            </section>
+<head>
+  <link rel="stylesheet" href="css/login.css" />
+  <title>Form</title>
+</head>
+<body>
+  <div class="login-wrap">
+    <div class="login-html">
+      <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
+      <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
+      <div class="login-form">
+        <div class="sign-in-htm">
+          <div class="group">
+            <label for="user" class="label">Username</label>
+            <input id="user" type="text" class="input">
+          </div>
+          <div class="group">
+            <label for="pass" class="label">Password</label>
+            <input id="pass" type="password" class="input" data-type="password">
+          </div>
+          <div class="group">
+            <input id="check" type="checkbox" class="check" checked>
+            <label for="check"><span class="icon"></span> Keep me Signed in</label>
+          </div>
+          <div class="group">
+            <input type="submit" class="button" value="Sign In">
+          </div>
+          <div class="hr"></div>
+          <div class="foot-lnk">
+            <a href="#forgot">Forgot Password?</a>
+            <a class="home" href="index.html"><Strong>Home</Strong></a>
+          </div>
         </div>
-        <footer>
-            <p>BookSwap &copy; 2024</p>
-        </footer>
-    </body>
+        <div class="sign-up-htm">
+          <div class="group">
+                <label for="user" class="label">First name</label>
+                <input id="user" type="text" class="input">
+          </div>
+          <div class="group">
+            <label for="user" class="label">Last name</label>
+            <input id="user" type="text" class="input">
+          </div>
+          <div class="group">
+            <label for="user" class="label">Username</label>
+            <input id="user" type="text" class="input">
+          </div>
+          <div class="group">
+            <label for="pass" class="label">Password</label>
+            <input id="pass" type="password" class="input" data-type="password">
+          </div>
+          <div class="group">
+            <label for="pass" class="label">Repeat Password</label>
+            <input id="pass" type="password" class="input" data-type="password">
+          </div>
+          <div class="group">
+            <label for="pass" class="label">Email Address</label>
+            <input id="pass" type="text" class="input">
+          </div>
+          <div class="group">
+            <label for="user" class="label">Location</label>
+            <input id="user" type="text" class="input">
+         </div>
+          <div class="group">
+            <input type="submit" class="button" value="Sign Up">
+          </div>
+          <div class="hr"></div>
+          <div class="foot-lnk">
+            <label for="tab-1">Already Member?</a>
+            <a class="home" href="index.html"><Strong>Home</Strong></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
 </html>
