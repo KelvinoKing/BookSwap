@@ -42,6 +42,12 @@ class DBStorage:
                     key = obj.__class__.__name__ + '.' + obj.id
                     new_dict[key] = obj
         return (new_dict)
+    
+    
+    def get_session(self):
+        """Returns the current database session"""
+        return self.__session
+
 
     def new(self, obj):
         """add the object to the current database session"""

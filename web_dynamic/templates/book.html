@@ -3,163 +3,41 @@
     <head>
         <meta charset="UTF-8">
         <title>BookSwap</title>
-        <link rel="stylesheet" type="text/css" href="css/style.css">
-        <link rel="shortcut icon" href="static/images/logo.jpg">
+        <link rel="stylesheet" type="text/css" href="../static/styles/style.css?{{ cached_id }}">
+        <link rel="shortcut icon" href="../static/images/logo.jpg?{{ cache_id }}">
     </head>
     <body>
         <div class="container">
             <section class="navigation">
                 <img class="logo" src="static/images/logo.jpg" alt="LOGO">
-                <a href="index.html"><strong>Home</strong></a>
-                <a href="book.html"><strong>Books</strong></a>
-                <a href="about.html"><strong>About</strong></a>
+                <a href="{{ url_for('home') }}"><strong>Home</strong></a>
+                <a href="{{ url_for('books') }}"><strong>Books</strong></a>
+                <a href="{{ url_for('about') }}"><strong>About</strong></a>
                 <input class="text-field" type="text" placeholder="Search by title, author, genre">
                 <button class="filter">
                     <img class="icon" id="search" src="static/images/searchIcon.png" alt="Search">
                 </button>
-                <a href="login.html"><strong>Login</strong></a>
+                <a href="{{ url_for('login') }}"><strong>Login</strong></a>
             </section>
 
             <section class="books">
+                {% for book, username, location in books %}
                 <div class="post">
-                    <img class="book" src="static/images/book1.jpeg" alt="Book1">
+                    <img class="book" src="{{ book.image }}" alt="Book image" onerror="this.onerror=null; this.src='../static/images/book1.jpeg'">
                     <div class="book-info">
-                        <h3>Book Title:</h3>
-                        <p>Author:</p>
-                        <p>Genre:</p>
-                        <p>Price:</p>
-                        <p>Condition:</p>
-                        <p>Location:</p>
-                        <p>Posted by:</p>
-                        <button class="buy">Borrow</button>
+                        <h3>Book Title: {{ book.title }}</h3>
+                        <p><Strong>Author:</Strong> {{ book.author }}</p>
+                        <p><Strong>Owner:</Strong> {{ username }}</p>
+                        <p><Strong>Location:</Strong> {{ location }}</p>
+                        <div class="synopsis">
+                            <h4>Synopsis:</h4>
+                            <p>{{ book.synopsis }}</p>
+                        </div>
+                        <p><Strong>Status:</Strong> {{ book.status }}</p>
+                        <button>Request</button>
                     </div>
                 </div>
-
-                <div class="post">
-                    <img class="book" src="static/images/book2.jpeg" alt="Book2">
-                    <div class="book-info">
-                        <h3>Book Title:</h3>
-                        <p>Author:</p>
-                        <p>Genre:</p>
-                        <p>Price:</p>
-                        <p>Condition:</p>
-                        <p>Location:</p>
-                        <p>Posted by:</p>
-                        <button class="buy">Borrow</button>
-                    </div>
-                </div>
-
-                <div class="post">
-                    <img class="book" src="static/images/book3.jpeg" alt="Book3">
-                    <div class="book-info">
-                        <h3>Book Title:</h3>
-                        <p>Author:</p>
-                        <p>Genre:</p>
-                        <p>Price:</p>
-                        <p>Condition:</p>
-                        <p>Location:</p>
-                        <p>Posted by:</p>
-                        <button class="buy">Borrow</button>
-                    </div>
-                </div>
-
-                <div class="post">
-                    <img class="book" src="static/images/book4.jpeg" alt="Book4">
-                    <div class="book-info">
-                        <h3>Book Title:</h3>
-                        <p>Author:</p>
-                        <p>Genre:</p>
-                        <p>Price:</p>
-                        <p>Condition:</p>
-                        <p>Location:</p>
-                        <p>Posted by:</p>
-                        <button class="buy">Borrow</button>
-                    </div>
-                </div>
-
-                <div class="post">
-                    <img class="book" src="static/images/book5.jpeg" alt="Book5">
-                    <div class="book-info">
-                        <h3>Book Title:</h3>
-                        <p>Author:</p>
-                        <p>Genre:</p>
-                        <p>Price:</p>
-                        <p>Condition:</p>
-                        <p>Location:</p>
-                        <p>Posted by:</p>
-                        <button class="buy">Borrow</button>
-                    </div>
-                </div>
-
-                <div class="post">
-                    <img class="book" src="static/images/book1.jpeg" alt="Book1">
-                    <div class="book-info">
-                        <h3>Book Title:</h3>
-                        <p>Author:</p>
-                        <p>Genre:</p>
-                        <p>Price:</p>
-                        <p>Condition:</p>
-                        <p>Location:</p>
-                        <p>Posted by:</p>
-                        <button class="buy">Borrow</button>
-                    </div>
-                </div>
-
-                <div class="post">
-                    <img class="book" src="static/images/book2.jpeg" alt="Book2">
-                    <div class="book-info">
-                        <h3>Book Title:</h3>
-                        <p>Author:</p>
-                        <p>Genre:</p>
-                        <p>Price:</p>
-                        <p>Condition:</p>
-                        <p>Location:</p>
-                        <p>Posted by:</p>
-                        <button class="buy">Borrow</button>
-                    </div>
-                </div>
-
-                <div class="post">
-                    <img class="book" src="static/images/book3.jpeg" alt="Book3">
-                    <div class="book-info">
-                        <h3>Book Title:</h3>
-                        <p>Author:</p>
-                        <p>Genre:</p>
-                        <p>Price:</p>
-                        <p>Condition:</p>
-                        <p>Location:</p>
-                        <p>Posted by:</p>
-                        <button class="buy">Borrow</button>
-                    </div>
-                </div>
-
-                <div class="post">
-                    <img class="book" src="static/images/book4.jpeg" alt="Book4">
-                    <div class="book-info">
-                        <h3>Book Title:</h3>
-                        <p>Author:</p>
-                        <p>Genre:</p>
-                        <p>Price:</p>
-                        <p>Condition:</p>
-                        <p>Location:</p>
-                        <p>Posted by:</p>
-                        <button class="buy">Borrow</button>
-                    </div>
-                </div>
-
-                <div class="post">
-                    <img class="book" src="static/images/book5.jpeg" alt="Book5">
-                    <div class="book-info">
-                        <h3>Book Title:</h3>
-                        <p>Author:</p>
-                        <p>Genre:</p>
-                        <p>Price:</p>
-                        <p>Condition:</p>
-                        <p>Location:</p>
-                        <p>Posted by:</p>
-                        <button class="buy">Borrow</button>
-                    </div>
-                </div>
+                {% endfor %}
             </section>
         </div>
         <footer>
