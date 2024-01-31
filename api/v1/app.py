@@ -9,7 +9,8 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 app.register_blueprint(app_views) # register blueprint
-cors = CORS(app, resources={r"/api/v1/*": {"origins": "http://127.0.0.1:5000"}})
+app.secret_key = 'Kelvino2001@king'
+cors = CORS(app, resources={r"/api/v1/*": {"origins": "http://127.0.0.1:5000"}}, supports_credentials=True)
 
 # Set CORS headers for all responses
 @app.after_request
@@ -17,6 +18,7 @@ def set_cors_headers(response):
     response.headers['Access-Control-Allow-Origin'] = 'http://127.0.0.1:5000'
     response.headers['Access-Control-Allow-Methods'] = 'GET, POST, PUT, DELETE, OPTIONS'
     response.headers['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'
+    response.headers['Access-Control-Allow-Credentials'] = 'true'
     return response
 
 

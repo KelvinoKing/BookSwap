@@ -1,9 +1,10 @@
 #!/usr/bin/python3
 """ Module for user view """
 from api.v1.views import app_views
-from flask import jsonify, abort, request, make_response
+from flask import jsonify, abort, request, make_response, session, redirect, url_for
 from models import storage
 from models.user import User
+from web_dynamic.bookswap import app
 
 
 @app_views.route('/users', methods=['GET'], strict_slashes=False)
@@ -65,7 +66,11 @@ def post_user():
     user = User(**user_json)
     user.save()
     
-    return make_response(jsonify(user.to_dict()), 201)
+    # Set user information in the session
+    session['user_id'] = user.id
+    
+    # Redirect to the dashboard route
+    return redirect(url_for('http://127.0.0.1:5000/dashboard'))
 
 
 @app_views.route('/users/<user_id>', methods=['PUT'], strict_slashes=False)
@@ -107,6 +112,9 @@ def login():
         if user.user_name == username and user.password == password:
             response = make_response(jsonify(user.to_dict()), 200)
             
-            return response
+            # Set user information in the session
+            session['user_id'] = user.id
+            # Redirect to the dashboard route
+            return redirect('http://127.0.0.1:5000/dashboard')
     
     abort(401, description='Unauthorized: Incorrect username or password')

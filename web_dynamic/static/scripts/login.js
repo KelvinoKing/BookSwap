@@ -34,6 +34,9 @@ $(document).ready(function() {
         url: "http://127.0.0.1:5001/api/v1/users",
         contentType: "application/json",
         data: JSON.stringify(userData),
+        xhrFields: {
+          withCredentials: true  // Include credentials
+      },
         success: function(response) {
           alert("User created successfully");
           // You can redirect or perform additional actions after successful signup
@@ -70,6 +73,9 @@ $(document).ready(function() {
         url: "http://127.0.0.1:5001/api/v1/login", // Adjust the URL based on your API endpoint for authentication
         contentType: "application/json",
         data: JSON.stringify(loginData),
+        xhrFields: {
+          withCredentials: true  // Include credentials
+      },
         success: function(response) {
           alert("Login successful");
           // You can redirect or perform additional actions after successful login
