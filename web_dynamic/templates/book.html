@@ -23,10 +23,11 @@
             <section class="books">
                 {% for book, username, location in books %}
                 <div class="post">
-                    <img class="book" src="{{ book.image }}" alt="Book image" onerror="this.onerror=null; this.src='../static/images/book1.jpeg'">
+                    <img class="book" src="../static/uploads/{{ book.image }}" alt="Book image">
                     <div class="book-info">
                         <h3>Book Title: {{ book.title }}</h3>
                         <p><Strong>Author:</Strong> {{ book.author }}</p>
+                        <p><Strong>Genre:<Strong> {{ book.genre }}</p>
                         <p><Strong>Owner:</Strong> {{ username }}</p>
                         <p><Strong>Location:</Strong> {{ location }}</p>
                         <div class="synopsis">

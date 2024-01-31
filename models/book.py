@@ -14,6 +14,7 @@ class Book(BaseModel, Base):
     author = Column(String(128), nullable=False)
     synopsis = Column(String(128), nullable=False)
     user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
+    genre = Column(String(128), nullable=False)
     status = Column(String(128), nullable=False)
-    image = Column(Text, nullable=False)
+    image = Column(String(128), nullable=False)
     user = relationship('User', back_populates='books')
