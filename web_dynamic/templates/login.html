@@ -2,8 +2,11 @@
 <html>
 <head>
   <title>BookSwap</title>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js?{{ cached_id }}"></script>
+  <script src="../static/scripts/login.js?{{ cached_id }}"></script>
   <link rel="stylesheet" type="text/css" href="../static/styles/login.css?{{ cached_id }}">
-  <link rel="shortcut icon" href="../static/images/logo.jpg?{{ cache_id }}">
+  <link rel="shortcut icon" href="../static/images/logo.jpg?{{ cached_id }}">
 </head>
 <body>
   <div class="login-wrap">
@@ -35,32 +38,32 @@
         </div>
         <div class="sign-up-htm">
           <div class="group">
-                <label for="user" class="label">First name</label>
-                <input id="user" type="text" class="input">
+                <label for="user-first-name" class="label">First name</label>
+                <input id="user-first-name" type="text" class="input">
           </div>
           <div class="group">
-            <label for="user" class="label">Last name</label>
-            <input id="user" type="text" class="input">
+            <label for="user-last-name" class="label">Last name</label>
+            <input id="user-last-name" type="text" class="input">
           </div>
           <div class="group">
-            <label for="user" class="label">Username</label>
-            <input id="user" type="text" class="input">
+            <label for="user-user-name" class="label">Username</label>
+            <input id="user-user-name" type="text" class="input">
           </div>
           <div class="group">
-            <label for="pass" class="label">Password</label>
-            <input id="pass" type="password" class="input" data-type="password">
+            <label for="pass-password" class="label">Password</label>
+            <input id="pass-password" type="password" class="input" data-type="password">
           </div>
           <div class="group">
-            <label for="pass" class="label">Repeat Password</label>
-            <input id="pass" type="password" class="input" data-type="password">
+            <label for="pass-repassword" class="label">Repeat Password</label>
+            <input id="pass-repassword" type="password" class="input" data-type="password">
           </div>
           <div class="group">
-            <label for="pass" class="label">Email Address</label>
-            <input id="pass" type="text" class="input">
+            <label for="pass-email" class="label">Email Address</label>
+            <input id="pass-email" type="text" class="input">
           </div>
           <div class="group">
-            <label for="user" class="label">Location</label>
-            <input id="user" type="text" class="input">
+            <label for="user-location" class="label">Location</label>
+            <input id="user-location" type="text" class="input">
          </div>
           <div class="group">
             <input type="submit" class="button" value="Sign Up">

@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """ Flask app """
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from models import storage
 from models.book import Book
 from models.user import User
@@ -44,8 +44,8 @@ def about():
     cache_id = str(uuid.uuid4())
     return render_template('about.html',
                            cache_id=cache_id)
-
-
+    
+    
 @app.route('/login', strict_slashes=False)
 def login():
     """ Login page """

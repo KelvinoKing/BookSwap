@@ -5,6 +5,7 @@ from models.book import Book
 import sqlalchemy
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
+from werkzeug.security import check_password_hash, generate_password_hash
 
 
 class User(BaseModel, Base):

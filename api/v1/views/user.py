@@ -57,7 +57,7 @@ def post_user():
         abort(400, 'Missing first_name')
     if 'last_name' not in user_json:
         abort(400, 'Missing last_name')
-    if 'username' not in user_json:
+    if 'user_name' not in user_json:
         abort(400, 'Missing username')
     if 'location' not in user_json:
         abort(400, 'Missing location')
@@ -88,3 +88,25 @@ def put_user(user_id):
     user.save()
     
     return make_response(jsonify(user.to_dict()), 200)
+
+
+# authentification
+@app_views.route('/login', methods=['POST'], strict_slashes=False)
+def login():
+    """ Login """
+    
+    data = request.get_json()
+    username = data.get('user_name')
+    password = data.get('password')
+    
+    if not username or not password:
+        abort(400, description='Bad Request: Missing username or password')
+    
+    users = storage.all(User).values()
+    for user in users:
+        if user.user_name == username and user.password == password:
+            response = make_response(jsonify(user.to_dict()), 200)
+            
+            return response
+    
+    abort(401, description='Unauthorized: Incorrect username or password')
