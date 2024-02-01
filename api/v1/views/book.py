@@ -65,12 +65,11 @@ def post_book(user_id):
         abort(400, 'Missing synopsis')
     if 'genre' not in book_json:
         abort(400, 'Missing genre')
-    if 'status' not in book_json:
-        abort(400, 'Missing status')
     if 'image' not in book_json:
         abort(400, 'Missing image')
         
     book_json['user_id'] = user_id
+    book_json['status'] = "Available"
     book = Book(**book_json)
     book.save()
     

@@ -39,7 +39,7 @@ $(document).ready(function() {
       },
         success: function(response) {
           alert("User created successfully");
-          // You can redirect or perform additional actions after successful signup
+          window.location.href = "/dashboard";
         },
         error: function(xhr, status, error) {
           var errorMessage = "Error creating user";
@@ -80,7 +80,7 @@ $(document).ready(function() {
           alert("Login successful");
           // You can redirect or perform additional actions after successful login
            // Redirect to the dashboard
-           // window.location.href = "/dashboard";
+           window.location.href = "/dashboard";
         },
         error: function(xhr, status, error) {
           var errorMessage = "Error loging in";

@@ -69,8 +69,7 @@ def post_user():
     # Set user information in the session
     session['user_id'] = user.id
     
-    # Redirect to the dashboard route
-    return redirect(url_for('http://127.0.0.1:5000/dashboard'))
+    return make_response(jsonify(user.to_dict()), 201)
 
 
 @app_views.route('/users/<user_id>', methods=['PUT'], strict_slashes=False)
@@ -115,6 +114,6 @@ def login():
             # Set user information in the session
             session['user_id'] = user.id
             # Redirect to the dashboard route
-            return redirect('http://127.0.0.1:5000/dashboard')
+            return make_response(jsonify(user.to_dict()), 200)
     
     abort(401, description='Unauthorized: Incorrect username or password')

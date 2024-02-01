@@ -10,6 +10,7 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app, origins=['http://127.0.0.1:5001'], supports_credentials=True)
+app.secret_key = 'Kelvino2001@king'
 
 
 @app.teardown_appcontext
@@ -63,9 +64,22 @@ def login():
 def dashboard():
     """ Dashboard route """
     
+    if 'user_id' not in session:
+        abort(401)
+        
+    user = storage.get(User, session['user_id'])
+    if not user:
+        abort(401)
+    user = user.to_dict()
+    books = storage.get_session().query(Book).filter(
+        Book.user_id == session['user_id']).all()
+    
+        
     cached_id = str(uuid.uuid4())
     # Render the dashboard template with user data
     return render_template('dashboard.html',
+                           user=user,
+                            books=books,
                            cache_id=cached_id)
     
     
