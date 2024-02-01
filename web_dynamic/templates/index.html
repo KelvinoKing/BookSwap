@@ -14,11 +14,13 @@
                 <a href="{{ url_for('home') }}"><strong>Home</strong></a>
                 <a href="{{ url_for('books') }}"><strong>Books</strong></a>
                 <a href="{{ url_for('about') }}"><strong>About</strong></a>
+                <a href="{{ url_for('dashboard') }}"><strong>Profile</strong></a>
                 <input class="text-field" type="text" placeholder="Search by title, author, genre">
                 <button class="filter">
                     <img class="icon" id="search" src="static/images/searchIcon.png" alt="Search">
                 </button>
                 <a href="{{ url_for('login') }}"><strong>Login</strong></a>
+                <a href="{{ url_for('logout') }}"><strong>Logout</strong></a>
             </section>
         </div>
         <footer>

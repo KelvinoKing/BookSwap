@@ -5,10 +5,10 @@ from models.book import Book
 import sqlalchemy
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
-from werkzeug.security import check_password_hash, generate_password_hash
+from flask_login import UserMixin
 
 
-class User(BaseModel, Base):
+class User(UserMixin, BaseModel, Base):
     """This is the User class"""
     
     __tablename__ = 'users'

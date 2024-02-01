@@ -9,7 +9,6 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 app.register_blueprint(app_views) # register blueprint
-app.secret_key = 'Kelvino2001@king'
 cors = CORS(app, resources={r"/api/v1/*": {"origins": "http://127.0.0.1:5000"}}, supports_credentials=True)
 
 # Set CORS headers for all responses
