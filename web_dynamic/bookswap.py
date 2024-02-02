@@ -12,7 +12,7 @@ from flask_login import login_user, login_required, current_user, logout_user
 
 app = Flask(__name__)
 login_manager = LoginManager()
-login_manager.login_view = 'signin'
+login_manager.login_view = 'login'
 login_manager.init_app(app)
 CORS(app, origins=['http://127.0.0.1:5001'], supports_credentials=True)
 app.secret_key = 'Kelvino2001@king'
@@ -67,11 +67,8 @@ def about():
 @login_required
 def dashboard():
     """ Dashboard route """
-    
-    if 'user_id' not in session:
-        return redirect(url_for('login'))  # Unauthorized
         
-    user = storage.get(User, session['user_id'])
+    user = storage.get(User, current_user.id)
     if not user:
         abort(401)
         
@@ -148,7 +145,6 @@ def signin():
         if user.user_name == username and user.password == password:
             login_user(user, remember=True)
             session['user_id'] = user.id
-            return redirect(url_for('dashboard'))
         
     flash("Incorect logins. Try again.")
     return redirect(url_for('login'))
@@ -159,8 +155,12 @@ def signin():
 def logout():
     """ Logout """
     
+    user = storage.get(User, current_user.id)
+    if not user:
+        abort(401)
+    
     logout_user()
-    return redirect(url_for('home'))
+    return redirect(url_for('books'))
     
     
 if __name__ == '__main__':
