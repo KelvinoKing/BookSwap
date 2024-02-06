@@ -129,6 +129,68 @@ input {
     margin-top: 10px;
 }
 
+/* Chat Section */
+#chat {
+    flex: 1;
+    background-color: #fff;
+    padding: 20px;
+    margin-left: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#chat h2 {
+    margin-bottom: 15px;
+}
+
+#chat-messages {
+    max-height: 300px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    margin-bottom: 15px;
+}
+
+#chat-messages p {
+    max-width: 80%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 8px;
+    clear: both;
+}
+
+.sent-message {
+    float: right;
+    background-color: #4CAF50;
+    color: white;
+}
+
+.received-message {
+    float: left;
+    background-color: #f1f1f1;
+}
+
+#chat-form {
+    display: flex;
+}
+
+#message-input {
+    flex: 1;
+    padding: 8px;
+    margin-right: 10px;
+}
+
+#chat-form button {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
 /* Footer Section */
 footer {
     text-align: center;

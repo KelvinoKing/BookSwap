@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <title>BookSwap Dashboard</title>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.3/socket.io.js"></script>
     <script src="../static/scripts/books.js?{{ cached_id }}"></script>
     <script src="../static/scripts/login.js?{{ cached_id }}"></script>
+    <script src="../static/scripts/chat.js?{{ cached_id }}"></script>
     <link rel="stylesheet" type="text/css" href="../static/styles/style.css?{{ cached_id }}">
     <link rel="stylesheet" type="text/css" href="../static/styles/dashboard.css?{{ cached_id }}">
     <link rel="stylesheet" type="text/css" href="../static/styles/navigation.css?{{ cached_id }}">
@@ -114,6 +116,17 @@
                     <!-- Repeat similar structure for each history entry -->
                 </div>
             </div>
+
+            <!-- Chat Section -->
+            <div id="chat">
+                <h2>Chat</h2>
+                <div id="chat-messages"></div>
+                <form id="chat-form" data-user-name="{{ user_name }}">
+                    <input type="text" id="message-input" placeholder="Type your message...">
+                    <button type="submit">Send</button>
+                </form>
+            </div>
+
         </section>
 
     </div>

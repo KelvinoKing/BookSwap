@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 """ Flask app """
-from flask import Flask, render_template, request, session, abort, redirect, url_for, flash
+from flask import Flask, render_template, request, session, abort, redirect, url_for, flash, jsonify
 from models import storage
 from models.book import Book
 from models.user import User
@@ -8,6 +8,7 @@ import uuid
 from flask_cors import CORS
 from flask_login import LoginManager
 from flask_login import login_user, login_required, current_user, logout_user
+from flask_socketio import SocketIO
 
 
 app = Flask(__name__)
@@ -16,6 +17,8 @@ login_manager.login_view = 'login'
 login_manager.init_app(app)
 CORS(app, origins=['http://127.0.0.1:5001'], supports_credentials=True)
 app.secret_key = 'Kelvino2001@king'
+
+socketio = SocketIO(app, cors_allowed_origins="*")
 
 
 @login_manager.user_loader
@@ -34,9 +37,9 @@ def close_db(self):
 def home():
     """ Home page """
     
-    cache_id = str(uuid.uuid4())
+    cached_id = str(uuid.uuid4())
     return render_template('index.html',
-                           cache_id=cache_id)
+                           cache_id=cached_id)
     
     
 @app.route('/books', strict_slashes=False)
@@ -47,20 +50,20 @@ def books():
         User, 
         Book.user_id == User.id).all()
     
-    cache_id = str(uuid.uuid4())
+    cached_id = str(uuid.uuid4())
     
     return render_template('book.html',
                            books=books,
-                           cache_id=cache_id)
+                           cached_id=cached_id)
 
 
 @app.route('/about', strict_slashes=False)
 def about():
     """ About page """
     
-    cache_id = str(uuid.uuid4())
+    cached_id = str(uuid.uuid4())
     return render_template('about.html',
-                           cache_id=cache_id)
+                           cached_id=cached_id)
     
     
 @app.route('/dashboard', strict_slashes=False)
@@ -72,17 +75,19 @@ def dashboard():
     if not user:
         abort(401)
         
-    user = user.to_dict()
     books = storage.get_session().query(Book).filter(
-        Book.user_id == session['user_id']).all()
+        Book.user_id == current_user.id).all()
     
         
     cached_id = str(uuid.uuid4())
+    user_name = user.user_name
+    print(user_name)
     # Render the dashboard template with user data
     return render_template('dashboard.html',
-                           user=user,
-                            books=books,
-                           cache_id=cached_id)
+                           user = user,
+                           user_name = user_name,
+                           books=books,
+                           cached_id=cached_id)
     
 
 # authentification
@@ -92,7 +97,7 @@ def login():
     
     cached_id = str(uuid.uuid4())
     return render_template('login.html',
-                           cache_id=cached_id)
+                           cached_id=cached_id)
 
 
 @app.route('/signup', methods=['POST'], strict_slashes=False)
@@ -140,14 +145,16 @@ def signin():
         flash('Missing username or password')
         abort(400, description='Bad Request: Missing username or password')
         
-    users = storage.all(User).values()
-    for user in users:
-        if user.user_name == username and user.password == password:
-            login_user(user, remember=True)
-            session['user_id'] = user.id
-        
-    flash("Incorect logins. Try again.")
-    return redirect(url_for('login'))
+    user = storage.get_session().query(User).filter_by(user_name=username, password=password).first()
+    
+    if user:
+        login_user(user, remember=True)
+        session['user_id'] = user.id
+        flash('Login successful')
+        return jsonify({'message': 'Login successful', 'user_id': user.id})
+    else:
+        flash('Incorrect login credentials. Try again.')
+        return redirect(url_for('login'))
     
 
 @app.route('/logout', strict_slashes=False)
@@ -161,7 +168,17 @@ def logout():
     
     logout_user()
     return redirect(url_for('books'))
+
+        
+@socketio.on('my event')
+def handle_my_custom_event(json, methods=['GET', 'POST']):
+    print('received my event: ' + str(json))
+    socketio.emit('my response', json, callback=messageReceived)
+    
+    
+def messageReceived(methods=['GET', 'POST']):
+    print('message was received!!!')
     
     
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=True)
+   socketio.run(app, host='0.0.0.0', port=5000, debug=True)
