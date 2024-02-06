@@ -78,7 +78,8 @@ $(document).ready(function() {
       success: function(response) {
         alert("Login successful");
         // You can redirect or perform additional actions after successful login
-         // Redirect to the dashboard
+        // Redirect to the dashboard after successful login
+        window.location.href = "dashboard";
       },
       error: function(xhr, status, error) {
         var errorMessage = "Error loging in";
