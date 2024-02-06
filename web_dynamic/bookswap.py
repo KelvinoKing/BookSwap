@@ -9,6 +9,8 @@ from flask_cors import CORS
 from flask_login import LoginManager
 from flask_login import login_user, login_required, current_user, logout_user
 from flask_socketio import SocketIO
+from datetime import timedelta
+
 
 
 app = Flask(__name__)
@@ -17,6 +19,12 @@ login_manager.login_view = 'login'
 login_manager.init_app(app)
 CORS(app, origins=['http://127.0.0.1:5001'], supports_credentials=True)
 app.secret_key = 'Kelvino2001@king'
+app.config['SESSION_PERMANENT'] = False
+app.config['SESSION_USE_SIGNER'] = True
+app.config['SESSION_TYPE'] = 'filesystem'
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=1)  # Adjust the duration as needed
+
+
 
 socketio = SocketIO(app, cors_allowed_origins="*")
 
@@ -148,7 +156,7 @@ def signin():
     user = storage.get_session().query(User).filter_by(user_name=username, password=password).first()
     
     if user:
-        login_user(user, remember=True)
+        login_user(user, remember=False)
         session['user_id'] = user.id
         flash('Login successful')
         return jsonify({'message': 'Login successful', 'user_id': user.id})
@@ -167,6 +175,7 @@ def logout():
         abort(401)
     
     logout_user()
+    session.pop('user_id', None)  # Remove the user_id from the session
     return redirect(url_for('books'))
 
         
