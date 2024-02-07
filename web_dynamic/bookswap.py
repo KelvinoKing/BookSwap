@@ -16,7 +16,7 @@ login_manager = LoginManager()
 login_manager.login_view = 'login'
 login_manager.init_app(app)
 CORS(app, origins=['http://127.0.0.1:5001'], supports_credentials=True)
-app.secret_key = 'Kelvino2001@king'
+app.secret_key = 'Kelvino@king'
 
 socketio = SocketIO(app, cors_allowed_origins="*")
 
@@ -72,6 +72,7 @@ def dashboard():
     """ Dashboard route """
         
     user = storage.get(User, current_user.id)
+    all_users = storage.get_session().query(User).all()
     if not user:
         abort(401)
         
@@ -84,6 +85,7 @@ def dashboard():
     print(user_name)
     # Render the dashboard template with user data
     return render_template('dashboard.html',
+                           all_users=all_users,
                            user = user,
                            user_name = user_name,
                            books=books,
