@@ -106,24 +106,35 @@
                 </form>
             </div>
 
-            <!-- History Section -->
-            <div id="history">
-                <h2>History</h2>
-                <div class="history-list">
-                    <!-- Display lending and borrowing history -->
-                    <p>Lending History: Book Title 1 to User A</p>
-                    <p>Borrowing History: Book Title 2 from User B</p>
-                    <!-- Repeat similar structure for each history entry -->
-                </div>
-            </div>
-
             <!-- Chat Section -->
             <div id="chat">
                 <h2>Chat</h2>
+
+                <!-- Search Bar Section -->
+                <div id="user-search">
+                    <label for="search-input">Search for a user:</label>
+                    <input type="text" id="search-input" oninput="searchUsers()" placeholder="Enter username">
+                </div>
+
+                <!-- User List Section -->
+                <h3>Users Available to Chat</h3>
+                <div id="user-list">
+                    <ul id="user-list-container">
+                        {% for u in all_users %}
+                            <li>
+                                <a href="#" onclick="startChat('{{ u.user_name }}')">{{ u.user_name }}
+                                    <span class="notification-dot" style="display: none;"></span>
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                
                 <div id="chat-messages"></div>
                 <form id="chat-form" data-user-name="{{ user_name }}">
                     <input type="text" id="message-input" placeholder="Type your message...">
                     <button type="submit">Send</button>
+                    <button type="button" onclick="cancelChat()">Cancel</button> <!-- Added Cancel button -->
                 </form>
             </div>
 
