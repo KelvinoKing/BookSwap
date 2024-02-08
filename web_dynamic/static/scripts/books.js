@@ -27,31 +27,29 @@ $(document).ready(function () {
     $(".update-save-btn").click(function () {
         // Retrieve book ID from the update form data attribute
         var bookId = $("#update-book").data('book-id');
-
+    
         // Retrieve the existing values
         var existingTitle = $("#update-book-title").val();
         var existingAuthor = $("#update-book-author").val();
         var existingGenre = $("#update-book-genre").val();
         var existingSynopsis = $("#update-book-synopsis").val();
-        var existingImage = $("#update-book-image").val();
-
-        // Extract the last file name from the image path using regex for both Windows and Linux
-        var fileName = existingImage.replace(/^.*[\\\/]/, '');
-
-        // Create book object with only non-empty values
-        var bookData = {};
-        if (existingTitle) bookData.title = existingTitle;
-        if (existingAuthor) bookData.author = existingAuthor;
-        if (existingGenre) bookData.genre = existingGenre;
-        if (existingSynopsis) bookData.synopsis = existingSynopsis;
-        if (existingImage) bookData.image = fileName;
-
-        // Make API call to update book information
+        var existingImage = $("#update-book-image")[0].files[0]; // Get the selected file
+    
+        // Create FormData object to handle file uploads
+        var formData = new FormData();
+        formData.append('title', existingTitle);
+        formData.append('author', existingAuthor);
+        formData.append('genre', existingGenre);
+        formData.append('synopsis', existingSynopsis);
+        formData.append('image', existingImage);
+    
+        // Make API call to update book information with FormData
         $.ajax({
             type: "PUT",
             url: "http://127.0.0.1:5001/api/v1/books/" + bookId,
-            contentType: "application/json",
-            data: JSON.stringify(bookData),
+            contentType: false, // Set content type to false for FormData
+            processData: false, // Disable processing of data for FormData
+            data: formData,
             xhrFields: {
                 withCredentials: true  // Include credentials
             },
@@ -61,21 +59,20 @@ $(document).ready(function () {
             },
             error: function (xhr, status, error) {
                 var errorMessage = "Error updating book";
-
+    
                 if (xhr.responseJSON && xhr.responseJSON.message) {
                     errorMessage += ": " + xhr.responseJSON.message;
                 } else {
                     errorMessage += ": " + status + " - " + error;
                 }
-
+    
                 alert(errorMessage);
             }
         });
-
+    
         $("#update-book").hide();
         $("#add-book").show();
     });
-
 
     // Delete button click event
     $(".delete-btn").click(function () {
@@ -126,25 +123,23 @@ $(document).ready(function () {
        var newAuthor = $("#book-author").val();
        var newGenre = $("#book-genre").val();
        var newSynopsis = $("#book-synopsis").val();
-       var newImage = $("#book-image").val();
+       var newImage = $("#book-image")[0].files[0]; // Get the selected file
 
-       // Extract the last file name from the image path using regex for both Windows and Linux
-       var fileName = newImage.replace(/^.*[\\\/]/, '');
-
-       // Create book object with only non-empty values
-       var newBookData = {};
-       if (newTitle) newBookData.title = newTitle;
-       if (newAuthor) newBookData.author = newAuthor;
-       if (newGenre) newBookData.genre = newGenre;
-       if (newSynopsis) newBookData.synopsis = newSynopsis;
-       if (newImage) newBookData.image = fileName;
+       // Create FormData object to handle file uploads
+       var formData = new FormData();
+       formData.append('title', newTitle);
+       formData.append('author', newAuthor);
+       formData.append('genre', newGenre);
+       formData.append('synopsis', newSynopsis);
+       formData.append('image', newImage);
 
        // Make API call to add a new book
        $.ajax({
            type: "POST",
            url: "http://127.0.0.1:5001/api/v1/users/" + user_id + "/books",
-           contentType: "application/json",
-           data: JSON.stringify(newBookData),
+           contentType: false,
+           processData: false,
+           data: formData,
            xhrFields: {
                withCredentials: true  // Include credentials
            },

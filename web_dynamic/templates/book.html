@@ -33,7 +33,7 @@
             <section class="books">
                 {% for book, username, location in books %}
                 <article class="book-container">
-                    <img class="book" src="../static/uploads/{{ book.image }}" alt="Book image">
+                    <img class="book" src="../static/uploads/images/{{ book.image }}" alt="Book image">
                     <div class="book-info">
                         <h3>{{ book.title }}</h3>
                         <p><strong>Author:</strong> {{ book.author }}</p>
