@@ -21,3 +21,5 @@ class User(UserMixin, BaseModel, Base):
     books = relationship('Book',
                          back_populates='user',
                          cascade='all, delete, delete-orphan')
+    
+    chats = relationship('Chat', back_populates='user')
