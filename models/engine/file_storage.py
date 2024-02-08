@@ -5,6 +5,7 @@ import os
 from models.base_model import BaseModel
 from models.user import User
 from models.book import Book
+from models.chat import Chat
 
 
 class FileStorage:

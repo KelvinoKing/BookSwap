@@ -2,13 +2,14 @@ import models
 from models.base_model import Base
 from models.user import User
 from models.book import Book
+from models.chat import Chat
 from os import getenv
 import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
 
 
-classes = {'User': User, 'Book': Book}
+classes = {'User': User, 'Book': Book, 'Chat': Chat}
 
 class DBStorage:
     """interacts with MySQL database"""

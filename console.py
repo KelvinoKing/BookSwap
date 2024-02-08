@@ -5,6 +5,7 @@ import models
 from models.base_model import BaseModel
 from models.user import User
 from models.book import Book
+from models.chat import Chat
 import shlex
 
 
@@ -12,7 +13,7 @@ import shlex
 class BookSwapCommand(cmd.Cmd):
     """"This is the console for BookSwap"""
     prompt = '(BookSwap) '
-    classes = {'BaseModel': BaseModel, 'User': User, 'Book': Book}
+    classes = {'BaseModel': BaseModel, 'User': User, 'Book': Book, 'Chat': Chat}
 
     def do_quit(self, arg):
         """Quit command to exit the program"""

@@ -122,7 +122,7 @@
                     <ul id="user-list-container">
                         {% for u in all_users %}
                             <li>
-                                <a href="#" onclick="startChat('{{ u.user_name }}')">{{ u.user_name }}
+                                <a class="receiver" href="#" data-receiver-id="{{ u.id }}"  data-sender-id="{{ user_id }}" onclick="startChat('{{ u.user_name }}')">{{ u.user_name }}
                                     <span class="notification-dot" style="display: none;"></span>
                                 </a>
                             </li>
@@ -131,7 +131,7 @@
                 </div>
                 
                 <div id="chat-messages"></div>
-                <form id="chat-form" data-user-name="{{ user_name }}">
+                <form id="chat-form" data-user-name="{{ user_name }}" data-user-id="{{ user_id }}">
                     <input type="text" id="message-input" placeholder="Type your message...">
                     <button type="submit">Send</button>
                     <button type="button" onclick="cancelChat()">Cancel</button> <!-- Added Cancel button -->
