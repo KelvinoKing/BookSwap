@@ -5,6 +5,14 @@ from flask import jsonify, abort, request, make_response
 from models import storage
 from models.book import Book
 from models.user import User
+from werkzeug.utils import secure_filename
+import os
+
+
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 @app_views.route('users/<user_id>/books', methods=['GET'], strict_slashes=False)
@@ -33,12 +41,18 @@ def get_book(book_id):
 
 @app_views.route('/books/<book_id>', methods=['DELETE'], strict_slashes=False)
 def delete_book(book_id):
-    """ Deletes a book """
+    """ Deletes a book along with its image file """
     
     book = storage.get(Book, book_id)
     if not book:
         abort(404)
-        
+
+    # Delete the associated image file
+    if book.image:
+        image_path = os.path.join('web_dynamic/static/uploads/images/', book.image)
+        if os.path.exists(image_path):
+            os.remove(image_path)
+
     storage.delete(book)
     storage.save()
     
@@ -47,32 +61,35 @@ def delete_book(book_id):
 
 @app_views.route('users/<user_id>/books', methods=['POST'], strict_slashes=False)
 def post_book(user_id):
-    """ Creates a book """
-    
     user = storage.get(User, user_id)
     if not user:
         abort(404)
-        
-    book_json = request.get_json()
-    
+
+    book_json = request.form.to_dict()
+
     if not book_json:
-        abort(400, 'Not a JSON')
-    if 'title' not in book_json:
-        abort(400, 'Missing title')
-    if 'author' not in book_json:
-        abort(400, 'Missing author')
-    if 'synopsis' not in book_json:
-        abort(400, 'Missing synopsis')
-    if 'genre' not in book_json:
-        abort(400, 'Missing genre')
-    if 'image' not in book_json:
-        abort(400, 'Missing image')
-        
+        abort(400, 'Not a valid form submission')
+    
+    # Handle file upload
+    if 'image' in request.files:
+        file = request.files['image']
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            
+            # Create the directory if it doesn't exist
+            upload_folder = 'web_dynamic/static/uploads/images/'
+            os.makedirs(upload_folder, exist_ok=True)
+            
+            file.save(os.path.join(upload_folder, filename))
+            book_json['image'] = filename
+        else:
+            abort(400, 'Invalid file type')
+
     book_json['user_id'] = user_id
     book_json['status'] = "Available"
     book = Book(**book_json)
     book.save()
-    
+
     return make_response(jsonify(book.to_dict()), 201)
 
 
@@ -84,11 +101,26 @@ def put_book(book_id):
     if not book:
         abort(404)
         
-    book_json = request.get_json()
-    
+    book_json = request.form.to_dict()
+
     if not book_json:
-        abort(400, 'Not a JSON')
-        
+        abort(400, 'Not a valid form submission')
+
+    # Handle image upload
+    if 'image' in request.files:
+        file = request.files['image']
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            
+            # Create the directory if it doesn't exist
+            upload_folder = 'web_dynamic/static/uploads/images/'
+            os.makedirs(upload_folder, exist_ok=True)
+            
+            file.save(os.path.join(upload_folder, filename))
+            book_json['image'] = filename
+        else:
+            abort(400, 'Invalid file type')
+
     for key, value in book_json.items():
         if key not in ['id', 'user_id', 'created_at', 'updated_at']:
             setattr(book, key, value)
