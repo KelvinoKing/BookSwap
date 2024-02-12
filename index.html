@@ -1,1 +1,132 @@
-<h1>Hello Kelvino!</h1>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookSwap</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 15px;
+            text-align: center;
+        }
+
+        section {
+            padding: 50px;
+            text-align: center;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        /* Grey line between features */
+        section > div:not(:last-child) {
+            border-bottom: 1px solid #ccc;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+        }
+
+        button {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 16px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <h1>BookSwap</h1>
+        <p>A platform for sharing and swapping books</p>
+        <nav>
+            <a href="#features">Features</a> |
+            <a href="#about">About</a>
+        </nav>
+        <br>
+        <a href="http://52.200.50.96/" target="_blank">
+            <button>Try it Now</button>
+        </a>
+    </header>
+
+    <!-- Features Section -->
+    <section id="features">
+        <h2>Key Features</h2>
+
+        <!-- Feature 1 -->
+        <div>
+            <h3>1. Book Swapping</h3>
+            <p>Trade books with other users to discover new reads and share your favorites by clicking on the 'Request' button.</p>
+            <img src="images/feature1.png" alt="Feature 1">
+        </div>
+
+        <!-- Feature 2 -->
+        <div>
+            <h3>2. Personal Library</h3>
+            <p>Organize and showcase your book collection within the app. Navigate to your profile and add, update, or delete books.</p>
+            <img src="images/feature2.png" alt="Feature 2">
+        </div>
+
+        <!-- Feature 3 -->
+        <div>
+            <h3>3. Communicate with fellow readers</h3>
+            <p>Send and receive messages from fellow readers in real time in the chat section. The chat section
+                is available in the profile. It is a great way to discuss books and arrange swaps.</p>
+            </p>
+            <img src="images/feature3.png" alt="Feature 3">
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <h2>About Us</h2>
+        <p>BookSwap was inspired by our love for reading and the desire to create a community of book lovers who can share their passion for literature. This project is a Portfolio Project for Holberton School.</p>
+
+        <!-- Team Members -->
+        <h3>Meet the Team</h3>
+        <ul>
+            <li><a href="https://www.linkedin.com/in/kelvin-njoroge-04068b231/" target="_blank">LinkedIn</a></li>
+            <li><a href="https://github.com/KelvinoKing" target="_blank">GitHub</a></li>
+            <li><a href="https://twitter.com/KelvinoNjoroge" target="_blank">Twitter</a></li>
+        </ul>
+
+        <!-- GitHub Repository -->
+        <p>Explore the code on <a href="https://github.com/KelvinoKing/BookSwap" target="_blank">GitHub</a>.</p>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2024 BookSwap. All rights reserved.</p>
+    </footer>
+
+</body>
+
+</html>
