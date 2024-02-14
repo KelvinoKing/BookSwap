@@ -38,7 +38,8 @@ $(document).ready(function() {
         withCredentials: true  // Include credentials
     },
       success: function(response) {
-        alert("User created successfully");
+        alert("User created successfully. You can now signin");
+        window.location.href = "login";
       },
       error: function(xhr, status, error) {
         var errorMessage = "Error creating user";
@@ -76,7 +77,7 @@ $(document).ready(function() {
         withCredentials: true  // Include credentials
     },
       success: function(response) {
-        alert("Login successful");
+        // alert("Login successful");
         // You can redirect or perform additional actions after successful login
         // Redirect to the dashboard after successful login
         window.location.href = "dashboard";
