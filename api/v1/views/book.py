@@ -14,6 +14,14 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+@app_views.route('/books', methods=['GET'], strict_slashes=False)
+def get_Allbooks():
+    """ Returns all books """
+    
+    books = [book.to_dict() for book in storage.all(Book).values()]
+    
+    return jsonify(books)
+
 
 @app_views.route('users/<user_id>/books', methods=['GET'], strict_slashes=False)
 def get_books(user_id):
