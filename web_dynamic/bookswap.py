@@ -19,7 +19,7 @@ login_manager.login_view = 'login'
 login_manager.init_app(app)
 CORS(app, origins=['http://127.0.0.1:5001'], supports_credentials=True)
 app.secret_key = 'Kelvino2001@king'
-app.config['SESSION_PERMANENT'] = False
+app.config['SESSION_PERMANENT'] = True
 app.config['SESSION_USE_SIGNER'] = True
 app.config['SESSION_TYPE'] = 'filesystem'
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=7)  # Adjust the duration as needed

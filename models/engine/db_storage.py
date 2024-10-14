@@ -23,12 +23,11 @@ class DBStorage:
         BOOKSWAP_MYSQL_PWD = getenv('BOOKSWAP_MYSQL_PWD')
         BOOKSWAP_MYSQL_DB = getenv('BOOKSWAP_MYSQL_DB')
         BOOKSWAP_ENV = getenv('BOOKSWAP_ENV')
-        
-        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.
-                                      format(BOOKSWAP_MYSQL_USER,
-                                             BOOKSWAP_MYSQL_PWD,
-                                             BOOKSWAP_MYSQL_HOST,
-                                             BOOKSWAP_MYSQL_DB))
+       
+        print(BOOKSWAP_MYSQL_USER)
+        self.__engine = create_engine(
+                f'mysql+mysqldb://{BOOKSWAP_MYSQL_USER}:{BOOKSWAP_MYSQL_PWD}@{BOOKSWAP_MYSQL_HOST}/{BOOKSWAP_MYSQL_DB}'
+                )
         
         if BOOKSWAP_ENV == 'test':
             Base.metadata.drop_all(self.__engine)
