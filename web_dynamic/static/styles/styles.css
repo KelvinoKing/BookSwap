@@ -1,0 +1,181 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+header {
+    background-color: #4CAF50;
+    padding: 1em;
+    text-align: center;
+    color: white;
+}
+
+nav {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+nav a {
+    color: white;
+    margin: 0 15px;
+    text-decoration: none;
+}
+
+nav .logo {
+    height: 50px;
+    width: auto;
+    margin-right: 20px;
+}
+
+footer {
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    padding: 1em 0;
+    position: fixed;
+    bottom: 0;
+    height: 2%;
+    width: 100%;
+}
+
+/* Home Page */
+.hero {
+    text-align: center;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../images/home.jpg');
+    color: white;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Container for hero content */
+.hero-content {
+    text-align: center;
+}
+
+/* Styling for the h1 */
+.hero h1 {
+    font-size: 48px;
+    margin-bottom: 20px;  /* Space between heading and button */
+}
+
+/* Styling for the Explore button */
+.explore {
+    background-color: #FF6347; /* Tomato color */
+    border: none;
+    color: white;
+    padding: 15px 30px;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.explore:hover {
+    background-color: #FF4500; /* Darker tomato on hover */
+}
+
+.explore:focus {
+    outline: none;
+}
+
+/* Book List */
+.book-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    padding: 20px;
+}
+
+.book {
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin: 10px;
+    width: 200px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.book h3 {
+    margin-top: 0;
+}
+
+.book button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.book button:hover {
+    background-color: #45a049;
+}
+
+/* Profile Page */
+.profile {
+    padding: 20px;
+}
+
+.user-books h3 {
+    margin-bottom: 10px;
+}
+
+.user-books .book-item {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.user-books .btn-add, .user-books .btn-update, .user-books .btn-delete {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    margin-top: 5px;
+    border-radius: 5px;
+}
+
+.user-books .btn-update {
+    background-color: #f0ad4e;
+}
+
+.user-books .btn-delete {
+    background-color: #d9534f;
+}
+
+.user-books .btn-add {
+    display: block;
+    margin-bottom: 15px;
+}
+
+.user-books .btn:hover {
+    opacity: 0.8;
+}
+
+.chat {
+    margin-top: 30px;
+}
+
+.chat-box {
+    background-color: #f1f1f1;
+    border: 1px solid #ddd;
+    padding: 10px;
+    height: 200px;
+    overflow-y: scroll;
+    margin-top: 10px;
+    border-radius: 5px;
+}

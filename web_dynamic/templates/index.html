@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}BookSwap | Home{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-content">
+        <h1>WELCOME TO BOOKSWAP LIBRARY</h1>
+        <a href="{{ url_for('books_page') }}"><button class="explore">Explore Books</button></a>
+    </div>
+</section>
+{% endblock %}

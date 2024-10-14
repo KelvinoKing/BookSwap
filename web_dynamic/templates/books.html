@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}BookSwap | Books{% endblock %}
+
+{% block content %}
+<section class="book-list">
+    {% for book in books %}
+    <div class="book">
+        <h3>{{ book.title }}</h3>
+        <p><strong>Owner:</strong> {{ book.owner }}</p>
+        <p><strong>Author:</strong> {{ book.author }}</p>
+        <p><strong>Genre:</strong> {{ book.genre }}</p>
+        <p><strong>Synopsis:</strong> {{ book.synopsis }}</p>
+        <button>Request Book</button>
+    </div>
+    {% endfor %}
+</section>
+{% endblock %}

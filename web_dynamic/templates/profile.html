@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}BookSwap | Profile{% endblock %}
+
+{% block content %}
+<section class="profile">
+    <!-- User's Books Section -->
+    <section class="user-books">
+        <button class="btn-add" onclick="window.location.href='/add_book'">Add New Book</button>
+        <ul>
+            {% for book in user_books %}
+            <li class="book-item">
+                <h4>{{ book.title }}</h4>
+                <p><strong>Author:</strong> {{ book.author }}</p>
+                <button class="btn-update" onclick="window.location.href='/update_book/{{ book.id }}'">Update</button>
+                <button class="btn-delete" onclick="window.location.href='/delete_book/{{ book.id }}'">Delete</button>
+            </li>
+            {% endfor %}
+        </ul>
+    </section>
+{% endblock %}
