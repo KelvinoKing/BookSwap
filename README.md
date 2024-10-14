@@ -17,3 +17,15 @@ Clone the repository:
 ```bash
 git clone https://github.com/your-repo/bookswap-console.git
 cd bookswap-console
+
+## Running the Application
+```bash
+git clone https://github.com/your-repo/bookswap-console.git
+cd BookSwap
+### Application
+```bash
+gunicorn --timeout 120 -b 127.0.0.1:5000 web_dynamic.bookswap:app
+
+### Api
+```bash
+gunicorn -b 127.0.0.1:5001 api.v1.app:app
