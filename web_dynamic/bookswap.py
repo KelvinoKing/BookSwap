@@ -6,13 +6,22 @@ app = Flask(__name__)
 
 # Example data for books and users
 books = [
-    {'id': 1, 'title': 'The Great Gatsby', 'author': 'F. Scott Fitzgerald', 'owner': 'Alice', 'genre': 'Fiction', 'synopsis': 'A story about...'},
-    {'id': 2, 'title': '1984', 'author': 'George Orwell', 'owner': 'Bob', 'genre': 'Dystopian', 'synopsis': 'A totalitarian regime...'}
+    {'id': 1, 'title': 'The Great Gatsby', 'author': 'F. Scott Fitzgerald', 'owner': 'Alice', 'genre': 'Fiction', 'synopsis': 'A story about a man prisoned unfairly'},
+    {'id': 2, 'title': '1984', 'author': 'George Orwell', 'owner': 'Bob', 'genre': 'Dystopian', 'synopsis': 'A totalitarian regime...'},
+    {'id': 1, 'title': 'The Great Gatsby', 'author': 'F. Scott Fitzgerald', 'owner': 'Alice', 'genre': 'Fiction', 'synopsis': 'A story about a man prisoned unfairly'},
+    {'id': 1, 'title': 'The Great Gatsby', 'author': 'F. Scott Fitzgerald', 'owner': 'Alice', 'genre': 'Fiction', 'synopsis': 'A story about a man prisoned unfairly'},
+    {'id': 1, 'title': 'The Great Gatsby', 'author': 'F. Scott Fitzgerald', 'owner': 'Alice', 'genre': 'Fiction', 'synopsis': 'A story about a man prisoned unfairly'},
+    {'id': 1, 'title': 'The Great Gatsby', 'author': 'F. Scott Fitzgerald', 'owner': 'Alice', 'genre': 'Fiction', 'synopsis': 'A story about a man prisoned unfairly'}
 ]
 
 user_books = [
     {'id': 1, 'title': 'The Catcher in the Rye', 'author': 'J.D. Salinger'},
-    {'id': 2, 'title': 'To Kill a Mockingbird', 'author': 'Harper Lee'}
+    {'id': 2, 'title': 'To Kill a Mockingbird', 'author': 'Harper Lee'},
+    {'id': 1, 'title': 'The Catcher in the Rye', 'author': 'J.D. Salinger'},
+    {'id': 1, 'title': 'The Catcher in the Rye', 'author': 'J.D. Salinger'},
+    {'id': 1, 'title': 'The Catcher in the Rye', 'author': 'J.D. Salinger'},
+    {'id': 1, 'title': 'The Catcher in the Rye', 'author': 'J.D. Salinger'},
+    {'id': 1, 'title': 'The Catcher in the Rye', 'author': 'J.D. Salinger'}
 ]
 
 user = {'username': 'Alice'}
@@ -81,4 +90,4 @@ def delete_book(book_id):
     return redirect(url_for('profile'))
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='localhost', port=5000, debug=True)

@@ -3,19 +3,21 @@
 {% block title %}BookSwap | Profile{% endblock %}
 
 {% block content %}
-<section class="profile">
-    <!-- User's Books Section -->
-    <section class="user-books">
-        <button class="btn-add" onclick="window.location.href='/add_book'">Add New Book</button>
-        <ul>
-            {% for book in user_books %}
-            <li class="book-item">
-                <h4>{{ book.title }}</h4>
-                <p><strong>Author:</strong> {{ book.author }}</p>
-                <button class="btn-update" onclick="window.location.href='/update_book/{{ book.id }}'">Update</button>
-                <button class="btn-delete" onclick="window.location.href='/delete_book/{{ book.id }}'">Delete</button>
-            </li>
-            {% endfor %}
-        </ul>
-    </section>
+<section class="profile-actions">
+    <button class="btn-add" onclick="window.location.href='/add_book'">Add New Book</button>
+</section>
+
+<section class="book-list">
+    {% for book in user_books %}
+    <div class="book">
+        <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="Book" class="book-image">
+        <h3>{{ book.title }}</h3>
+        <p><strong>Author:</strong> {{ book.author }}</p>
+        <div class="book-actions">
+            <button class="btn-update" onclick="window.location.href='/update_book/{{ book.id }}'">Update</button>
+            <button class="btn-delete" onclick="window.location.href='/delete_book/{{ book.id }}'">Delete</button>
+        </div>
+    </div>
+    {% endfor %}
+</section>
 {% endblock %}
