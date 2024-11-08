@@ -1,198 +1,93 @@
 #!/usr/bin/python3
 """ Flask app """
-from flask import Flask, render_template, request, session, abort, redirect, url_for, flash, jsonify
-from models import storage
-from models.book import Book
-from models.user import User
-import uuid
-from flask_cors import CORS
-from flask_login import LoginManager
-from flask_login import login_user, login_required, current_user, logout_user
-from flask_socketio import SocketIO
-from datetime import timedelta
-from sqlalchemy import asc, or_
-
+from flask import Flask, render_template, redirect, url_for, request
 
 app = Flask(__name__)
-login_manager = LoginManager()
-login_manager.login_view = 'login'
-login_manager.init_app(app)
-CORS(app, origins=['http://127.0.0.1:5001'], supports_credentials=True)
-app.secret_key = 'Kelvino2001@king'
-app.config['SESSION_PERMANENT'] = True
-app.config['SESSION_USE_SIGNER'] = True
-app.config['SESSION_TYPE'] = 'filesystem'
-app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=7)  # Adjust the duration as needed
+
+# Example data for books and users
+books = [
+    {'id': 1, 'title': 'The Great Gatsby', 'author': 'F. Scott Fitzgerald', 'owner': 'Alice', 'genre': 'Fiction', 'synopsis': 'A story about a man prisoned unfairly'},
+    {'id': 2, 'title': '1984', 'author': 'George Orwell', 'owner': 'Bob', 'genre': 'Dystopian', 'synopsis': 'A totalitarian regime...'},
+    {'id': 1, 'title': 'The Great Gatsby', 'author': 'F. Scott Fitzgerald', 'owner': 'Alice', 'genre': 'Fiction', 'synopsis': 'A story about a man prisoned unfairly'},
+    {'id': 1, 'title': 'The Great Gatsby', 'author': 'F. Scott Fitzgerald', 'owner': 'Alice', 'genre': 'Fiction', 'synopsis': 'A story about a man prisoned unfairly'},
+    {'id': 1, 'title': 'The Great Gatsby', 'author': 'F. Scott Fitzgerald', 'owner': 'Alice', 'genre': 'Fiction', 'synopsis': 'A story about a man prisoned unfairly'},
+    {'id': 1, 'title': 'The Great Gatsby', 'author': 'F. Scott Fitzgerald', 'owner': 'Alice', 'genre': 'Fiction', 'synopsis': 'A story about a man prisoned unfairly'}
+]
+
+user_books = [
+    {'id': 1, 'title': 'The Catcher in the Rye', 'author': 'J.D. Salinger'},
+    {'id': 2, 'title': 'To Kill a Mockingbird', 'author': 'Harper Lee'},
+    {'id': 1, 'title': 'The Catcher in the Rye', 'author': 'J.D. Salinger'},
+    {'id': 1, 'title': 'The Catcher in the Rye', 'author': 'J.D. Salinger'},
+    {'id': 1, 'title': 'The Catcher in the Rye', 'author': 'J.D. Salinger'},
+    {'id': 1, 'title': 'The Catcher in the Rye', 'author': 'J.D. Salinger'},
+    {'id': 1, 'title': 'The Catcher in the Rye', 'author': 'J.D. Salinger'}
+]
+
+user = {'username': 'Alice'}
+
+# Example chat data
+chats = [
+    {'sender': 'Bob', 'last_message': 'Can I borrow The Great Gatsby?', 'read': False},
+    {'sender': 'Charlie', 'last_message': 'Do you have any other books?', 'read': True},
+    {'sender': 'Bob', 'last_message': 'Thanks for the book!', 'read': True}
+]
+
+# Other users (simulated)
+other_users = [
+    {'username': 'Bob'},
+    {'username': 'Charlie'},
+    {'username': 'David'}
+]
 
 
-
-socketio = SocketIO(app, cors_allowed_origins="*")
-connected_users = set()
-
-
-@login_manager.user_loader
-def load_user(user_id):
-    """ Load user """
-    return storage.get(User, user_id)
-
-
-@app.teardown_appcontext
-def close_db(self):
-    """ Close session """
-    storage.close()
-    
-
-@app.route('/home', strict_slashes=False)
+@app.route('/home')
 def home():
-    """ Home page """
-    
-    cached_id = str(uuid.uuid4())
-    return render_template('index.html',
-                           cache_id=cached_id)
-    
-    
-@app.route('/books', strict_slashes=False)
-def books():
-    """ BookSwap is live """
-    
-    books = storage.get_session().query(Book, User.user_name, User.location).join(
-        User, 
-        Book.user_id == User.id).all()
-    
-    cached_id = str(uuid.uuid4())
-    
-    return render_template('book.html',
-                           books=books,
-                           cached_id=cached_id)
+    return render_template('index.html')
+
+@app.route('/books')
+def books_page():
+    return render_template('books.html', books=books)
+
+@app.route('/profile')
+def profile():
+    return render_template('profile.html', user=user, user_books=user_books, other_users=other_users)
 
 
-@app.route('/about', strict_slashes=False)
-def about():
-    """ About page """
-    
-    cached_id = str(uuid.uuid4())
-    return render_template('about.html',
-                           cached_id=cached_id)
-    
-    
-@app.route('/dashboard', strict_slashes=False)
-@login_required
-def dashboard():
-    """ Dashboard route """
-        
-    user = storage.get(User, current_user.id)
-    if not user:
-        abort(401)
-        
-    all_users = storage.get_session().query(User).all()
-        
-    books = storage.get_session().query(Book).filter(
-        Book.user_id == current_user.id).all()
-    
-    cached_id = str(uuid.uuid4())
-    user_name = user.user_name
-    user_id = user.id
-    print(user_name)
-    # Render the dashboard template with user data
-    return render_template('dashboard.html',
-                           user = user,
-                           user_id = user_id,
-                           user_name = user_name,
-                           all_users=all_users,
-                           books=books,
-                           cached_id=cached_id)
-    
+@app.route('/add_book', methods=['GET', 'POST'])
+def add_book():
+    if request.method == 'POST':
+        # Get form data and create a new book entry
+        new_id = len(user_books) + 1
+        new_book = {
+            'id': new_id,
+            'title': request.form['title'],
+            'author': request.form['author']
+        }
+        user_books.append(new_book)
+        return redirect(url_for('profile'))
 
-# authentification
-@app.route('/login', strict_slashes=False)
-def login():
-    """ Login """
-    
-    cached_id = str(uuid.uuid4())
-    return render_template('login.html',
-                           cached_id=cached_id)
+    return render_template('add_book.html')
 
+@app.route('/update_book/<int:book_id>', methods=['GET', 'POST'])
+def update_book(book_id):
+    # Find the book to update
+    book = next((book for book in user_books if book['id'] == book_id), None)
+    if request.method == 'POST':
+        # Update book details
+        if book:
+            book['title'] = request.form['title']
+            book['author'] = request.form['author']
+        return redirect(url_for('profile'))
 
-@app.route('/signup', methods=['POST'], strict_slashes=False)
-def signup():
-    """ Signup """
-    
-    user_json = request.get_json()
-    
-    if not user_json:
-        abort(400, 'Not a JSON')
-    if 'email' not in user_json:
-        abort(400, 'Missing email')
-    if 'password' not in user_json:
-        abort(400, 'Missing password')
-    if 'first_name' not in user_json:
-        abort(400, 'Missing first_name')
-    if 'last_name' not in user_json:
-        abort(400, 'Missing last_name')
-    if 'user_name' not in user_json:
-        abort(400, 'Missing username')
-    if 'location' not in user_json:
-        abort(400, 'Missing location')
-        
-    user = storage.get_session().query(User).filter_by(email=user_json['email']).first()
-    if user:
-        flash('Email address already exists')
-        return redirect(url_for('login'))
-            
-    user = User(**user_json)
-    user.save()
-    
-    flash('Sign up successful. Now you can proceed to sign in')
-    return redirect(url_for('login'))
+    return render_template('update_book.html', book=book)
 
+@app.route('/delete_book/<int:book_id>')
+def delete_book(book_id):
+    # Remove the book from user's collection
+    global user_books
+    user_books = [book for book in user_books if book['id'] != book_id]
+    return redirect(url_for('profile'))
 
-@app.route('/signin', methods=['POST'], strict_slashes=False)
-def signin():
-    """Signin"""
-    
-    data = request.get_json()
-    username = data.get('user_name')
-    password = data.get('password')
-    
-    if not username or not password:
-        flash('Missing username or password')
-        abort(400, description='Bad Request: Missing username or password')
-        
-    user = storage.get_session().query(User).filter_by(user_name=username, password=password).first()
-    
-    if user:
-        login_user(user, remember=False)
-        session['user_id'] = user.id
-        flash('Login successful')
-        return jsonify({'message': 'Login successful', 'user_id': user.id})
-    else:
-        flash('Incorrect login credentials. Try again.')
-        return redirect(url_for('login'))
-    
-
-@app.route('/logout', strict_slashes=False)
-@login_required
-def logout():
-    """ Logout """
-    
-    user = storage.get(User, current_user.id)
-    if not user:
-        abort(401)
-    
-    logout_user()
-    session.pop('user_id', None)  # Remove the user_id from the session
-    return redirect(url_for('books'))
-
-        
-@socketio.on('my event')
-def handle_my_custom_event(json, methods=['GET', 'POST']):
-    print('received my event: ' + str(json))
-    socketio.emit('my response', json, callback=messageReceived)
-    
-    
-def messageReceived(methods=['GET', 'POST']):
-    print('message was received!!!')
-    
-    
 if __name__ == '__main__':
-   socketio.run(app, host='0.0.0.0', port=5000, debug=True)
+    app.run(host='localhost', port=5000, debug=True)

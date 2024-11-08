@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}BookSwap{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/profile.css') }}">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/home">
+                <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="BookSwap Logo" class="logo">
+            </a>
+            <a href="/home">Home</a>
+            <a href="/books">Books</a>
+            <a href="/profile">Profile</a>
+            <a href="/about">About</a>
+
+            <!-- Only display logout button on the profile page -->
+            {% if request.path == '/profile' %}
+                <a href="/logout" class="logout-btn">Logout</a>
+                <img src="{{ url_for('static', filename='images/logo.jpg') }}" alt="BookSwap Logo" class="profile-pic">
+            {% endif %}
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <p>&copy; 2024 BookSwap</p>
+    </footer>
+</body>
+</html>
+

@@ -1,0 +1,53 @@
+.profile-actions {
+    display: flex;
+    justify-content: flex-start; /* Align the button to the right */
+    padding: 10px;
+    background-color: #fff; /* Background to separate button area from the list */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Slight shadow for separation */
+    margin-bottom: 10px; /* Space between button and book list */
+}
+
+.profile-pic {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.book-actions .btn-update,
+.book-actions .btn-delete {
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.book-actions .btn-delete {
+    background-color: #FF6347;
+}
+
+.book-actions button:hover {
+    background-color: #0056b3;
+}
+
+.book-actions .btn-delete:hover {
+    background-color: #e55347;
+}
+
+.btn-add {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-add:hover {
+    background-color: #45a049;
+}
